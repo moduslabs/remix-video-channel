@@ -1,32 +1,46 @@
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Grid,
+  Typography,
+} from "@mui/material";
+import { useLoaderData } from "remix";
+import { getVideos } from "~/videos";
+
+export const loader = async () => {
+  return getVideos();
+};
+
 export default function Index() {
+  const videos = useLoaderData<GoogleApiYouTubeVideoResource[]>();
+  console.log(videos);
+
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
-    </div>
+    <Grid container spacing={1}>
+      {videos.map((video: GoogleApiYouTubeVideoResource) => {
+        const thumbnail = video.snippet.thumbnails.default;
+        return (
+          <Grid item xs={12} md={6}>
+            <Card sx={{ display: "flex" }}>
+              <CardMedia
+                component="img"
+                image={thumbnail.url}
+                sx={{ width: thumbnail.width }}
+              />
+              <Box>
+                <CardContent>
+                  <Typography variant="h5">{video.snippet.title}</Typography>
+                  <Typography variant="subtitle1">
+                    {video.snippet.description}
+                  </Typography>
+                </CardContent>
+              </Box>
+            </Card>
+          </Grid>
+        );
+      })}
+    </Grid>
   );
 }
