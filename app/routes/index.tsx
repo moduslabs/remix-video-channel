@@ -19,15 +19,15 @@ export default function Index() {
 
   return (
     <Grid container spacing={1}>
-      {videos.map((video: GoogleApiYouTubeVideoResource) => {
-        const thumbnail = video.snippet.thumbnails.default;
+      {videos.map((video) => {
+        const thumbnail = video.snippet.thumbnails.medium;
         return (
           <Grid item xs={12} md={6}>
-            <Card sx={{ display: "flex" }}>
+            <Card sx={{ display: "flex", height: thumbnail.height }}>
               <CardMedia
                 component="img"
                 image={thumbnail.url}
-                sx={{ width: thumbnail.width }}
+                sx={{ width: thumbnail.width, height: thumbnail.height }}
               />
               <Box>
                 <CardContent>
