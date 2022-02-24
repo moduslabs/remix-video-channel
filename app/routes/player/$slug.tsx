@@ -1,17 +1,21 @@
-import { Grid } from "@mui/material";
-import { useLoaderData } from "remix";
+import { useState } from "react";
+import { Button, Grid, Modal } from "@mui/material";
+import { Link, Outlet, useLoaderData } from "remix";
 import type { LoaderFunction } from "remix";
 import invariant from "tiny-invariant";
+import Comments from "./$slug/comments";
 
-export const loader: LoaderFunction = async ({
-  params
-}) => {
+export const loader: LoaderFunction = async ({ params }) => {
   invariant(params.slug, "expected params.slug");
   return params.slug;
 };
 
 export default function Player() {
   const id = useLoaderData();
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <Grid container>
@@ -24,6 +28,15 @@ export default function Player() {
           frameBorder="0"
         ></iframe>
       </Grid>
+      <Grid item xs={8}></Grid>
+      <Grid item xs={4}>
+        <Link to={`/player/${id}/comments`}>
+          <Button onClick={handleOpen}>Comments</Button>
+        </Link>
+      </Grid>
+      <Modal open={open} onClose={handleClose}>
+        <Outlet />
+      </Modal>
     </Grid>
   );
 }
