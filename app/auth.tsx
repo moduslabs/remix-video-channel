@@ -1,3 +1,3 @@
 export default {
-  apiKey: "YOUR_API_KEY",
+  apiKey: process.env.YT_API_KEY,
 };
