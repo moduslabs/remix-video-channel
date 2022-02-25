@@ -3,9 +3,10 @@ import {
   List,
   ListItem,
   ListItemText,
+  Modal,
   Typography,
 } from "@mui/material";
-import { useLoaderData } from "remix";
+import { useLoaderData, useNavigate } from "remix";
 import type { LoaderFunction } from "remix";
 import invariant from "tiny-invariant";
 import { getComments } from "../../../comments";
@@ -19,28 +20,32 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export default function Comments() {
   const comments = useLoaderData<youtube_v3.Schema$CommentThread[]>();
+  const navigate = useNavigate();
 
-  console.log(comments);
+  const handleClose = () => {
+    navigate(-1);
+  };
+
   return (
-    <Container
-      sx={{
-        bgcolor: "background.paper",
-        overflowY: "auto",
-        width: "80%",
-        height: "80%",
-      }}
-    >
-      <List>
-        {comments.map(({ snippet, replies }) => (
-          <ListItem sx={{ display: "block" }}>
-            <Typography variant="subtitle2">
-              {snippet?.topLevelComment?.snippet?.authorDisplayName}
-            </Typography>
-            <ListItemText>
-              {snippet?.topLevelComment?.snippet?.textDisplay}
-            </ListItemText>
-            {replies && (
-              <div>
+    <Modal open onClose={handleClose}>
+      <Container
+        sx={{
+          bgcolor: "background.paper",
+          overflowY: "auto",
+          width: "80%",
+          height: "80%",
+        }}
+      >
+        <List>
+          {comments.map(({ snippet, replies }) => (
+            <ListItem sx={{ display: "block" }}>
+              <Typography variant="subtitle2">
+                {snippet?.topLevelComment?.snippet?.authorDisplayName}
+              </Typography>
+              <ListItemText>
+                {snippet?.topLevelComment?.snippet?.textDisplay}
+              </ListItemText>
+              {replies && (
                 <List>
                   {replies?.comments?.map(({ snippet }) => (
                     <ListItem sx={{ display: "block" }}>
@@ -51,11 +56,11 @@ export default function Comments() {
                     </ListItem>
                   ))}
                 </List>
-              </div>
-            )}
-          </ListItem>
-        ))}
-      </List>
-    </Container>
+              )}
+            </ListItem>
+          ))}
+        </List>
+      </Container>
+    </Modal>
   );
 }
