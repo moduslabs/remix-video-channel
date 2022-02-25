@@ -26,6 +26,10 @@ export default function Comments() {
     navigate(-1);
   };
 
+  const createCommentMarkup = (text: string) => {
+    return { __html: text };
+  };
+
   return (
     <Modal open onClose={handleClose}>
       <Container
@@ -43,8 +47,13 @@ export default function Comments() {
                 {snippet?.topLevelComment?.snippet?.authorDisplayName}
               </Typography>
               <ListItemText>
-                {snippet?.topLevelComment?.snippet?.textDisplay}
+                <div
+                  dangerouslySetInnerHTML={createCommentMarkup(
+                    snippet?.topLevelComment?.snippet?.textDisplay as string
+                  )}
+                />
               </ListItemText>
+
               {replies && (
                 <List>
                   {replies?.comments?.map(({ snippet }) => (
@@ -52,7 +61,13 @@ export default function Comments() {
                       <Typography variant="subtitle2">
                         {snippet?.authorDisplayName}
                       </Typography>
-                      <ListItemText>{snippet?.textDisplay}</ListItemText>
+                      <ListItemText>
+                        <div
+                          dangerouslySetInnerHTML={createCommentMarkup(
+                            snippet?.textDisplay as string
+                          )}
+                        />
+                      </ListItemText>
                     </ListItem>
                   ))}
                 </List>
