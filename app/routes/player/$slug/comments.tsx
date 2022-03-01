@@ -23,7 +23,7 @@ export default function Comments() {
   const navigate = useNavigate();
 
   const handleClose = () => {
-    navigate(-1);
+    navigate("../");
   };
 
   return (
