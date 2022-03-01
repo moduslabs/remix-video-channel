@@ -22,7 +22,11 @@ export default function Comments() {
   const navigate = useNavigate();
 
   const handleClose = () => {
-    navigate(-1);
+    navigate("../");
+  };
+
+  const createCommentMarkup = (text: string) => {
+    return { __html: text };
   };
 
   return (
@@ -47,7 +51,11 @@ export default function Comments() {
             }) => (
               <ListItem sx={{ display: "block" }}>
                 <Typography variant="subtitle2">{authorDisplayName}</Typography>
-                <ListItemText>{textDisplay}</ListItemText>
+                <ListItemText>
+                  <div
+                    dangerouslySetInnerHTML={createCommentMarkup(textDisplay)}
+                  />
+                </ListItemText>
                 {replies && (
                   <List>
                     {replies.comments.map(
@@ -56,7 +64,13 @@ export default function Comments() {
                           <Typography variant="subtitle2">
                             {authorDisplayName}
                           </Typography>
-                          <ListItemText>{textDisplay}</ListItemText>
+                          <ListItemText>
+                            <div
+                              dangerouslySetInnerHTML={createCommentMarkup(
+                                textDisplay
+                              )}
+                            />
+                          </ListItemText>
                         </ListItem>
                       )
                     )}
