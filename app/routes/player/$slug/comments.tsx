@@ -9,8 +9,7 @@ import {
 import { useLoaderData, useNavigate } from "remix";
 import type { LoaderFunction } from "remix";
 import invariant from "tiny-invariant";
-import { getComments } from "../../../comments";
-import { youtube_v3 } from "@googleapis/youtube";
+import { Comment, getComments } from "../../../comments";
 
 export const loader: LoaderFunction = async ({ params }) => {
   invariant(params.slug, "expected params.slug");
@@ -19,7 +18,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 export default function Comments() {
-  const comments = useLoaderData<youtube_v3.Schema$CommentThread[]>();
+  const comments = useLoaderData<Comment[]>();
   const navigate = useNavigate();
 
   const handleClose = () => {
@@ -37,28 +36,35 @@ export default function Comments() {
         }}
       >
         <List>
-          {comments.map(({ snippet, replies }) => (
-            <ListItem sx={{ display: "block" }}>
-              <Typography variant="subtitle2">
-                {snippet?.topLevelComment?.snippet?.authorDisplayName}
-              </Typography>
-              <ListItemText>
-                {snippet?.topLevelComment?.snippet?.textDisplay}
-              </ListItemText>
-              {replies && (
-                <List>
-                  {replies?.comments?.map(({ snippet }) => (
-                    <ListItem sx={{ display: "block" }}>
-                      <Typography variant="subtitle2">
-                        {snippet?.authorDisplayName}
-                      </Typography>
-                      <ListItemText>{snippet?.textDisplay}</ListItemText>
-                    </ListItem>
-                  ))}
-                </List>
-              )}
-            </ListItem>
-          ))}
+          {comments.map(
+            ({
+              snippet: {
+                topLevelComment: {
+                  snippet: { authorDisplayName, textDisplay },
+                },
+              },
+              replies,
+            }) => (
+              <ListItem sx={{ display: "block" }}>
+                <Typography variant="subtitle2">{authorDisplayName}</Typography>
+                <ListItemText>{textDisplay}</ListItemText>
+                {replies && (
+                  <List>
+                    {replies.comments.map(
+                      ({ snippet: { authorDisplayName, textDisplay } }) => (
+                        <ListItem sx={{ display: "block" }}>
+                          <Typography variant="subtitle2">
+                            {authorDisplayName}
+                          </Typography>
+                          <ListItemText>{textDisplay}</ListItemText>
+                        </ListItem>
+                      )
+                    )}
+                  </List>
+                )}
+              </ListItem>
+            )
+          )}
         </List>
       </Container>
     </Modal>

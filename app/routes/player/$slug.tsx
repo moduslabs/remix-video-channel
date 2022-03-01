@@ -3,7 +3,6 @@ import { Link, Outlet, useLoaderData } from "remix";
 import type { LoaderFunction } from "remix";
 import invariant from "tiny-invariant";
 import { getVideoData } from "~/videoData";
-import { youtube_v3 } from "@googleapis/youtube";
 
 export const loader: LoaderFunction = async ({ params }) => {
   invariant(params.slug, "expected params.slug");
@@ -13,7 +12,10 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 export default function Player() {
-  const { id, player, statistics } = useLoaderData<youtube_v3.Schema$Video>();
+  const {
+    id,
+    statistics: { commentCount, likeCount },
+  } = useLoaderData<GoogleApiYouTubeVideoResource>();
 
   return (
     <Container>
@@ -35,11 +37,11 @@ export default function Player() {
           <Typography
             variant="h6"
             sx={{ flexGrow: 1 }}
-          >{`${statistics?.likeCount} likes`}</Typography>
+          >{`${likeCount} likes`}</Typography>
           <Button
             component={Link}
             to={`/player/${id}/comments`}
-          >{`${statistics?.commentCount} Comments`}</Button>
+          >{`${commentCount} Comments`}</Button>
         </Box>
       </Box>
       <Outlet />
