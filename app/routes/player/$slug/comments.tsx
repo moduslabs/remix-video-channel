@@ -23,7 +23,7 @@ export default function Comments() {
   const navigate = useNavigate();
 
   const handleClose = () => {
-    navigate(-1);
+    navigate("../");
   };
 
   const createCommentMarkup = (text: string) => {
@@ -53,7 +53,6 @@ export default function Comments() {
                   )}
                 />
               </ListItemText>
-
               {replies && (
                 <List>
                   {replies?.comments?.map(({ snippet }) => (
