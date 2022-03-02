@@ -1,11 +1,25 @@
-import { api } from "./api";
+import auth from "./auth";
+
+interface CommentSnippet {
+  snippet: {
+    authorDisplayName: string;
+    textDisplay: string;
+  };
+}
+export interface Comment {
+  snippet: {
+    topLevelComment: CommentSnippet;
+  };
+  replies: {
+    comments: CommentSnippet[];
+  };
+}
 
 export const getComments = async (videoId: string) => {
-  const response = await api.commentThreads.list({
-    part: ["snippet", "replies"],
-    videoId: videoId,
-    maxResults: 20,
-  });
+  const response = await fetch(
+    `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&part=replies&videoId=${videoId}&maxResults=20&key=${auth.apiKey}`
+  );
+  const json = await response.json();
 
-  return response.data.items || [];
+  return json.items as Comment[];
 };

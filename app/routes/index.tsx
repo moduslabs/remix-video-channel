@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Card,
   CardContent,
   CardMedia,
@@ -24,25 +25,53 @@ export default function Index() {
             description,
             title,
             thumbnails: { medium: thumbnail },
-            resourceId: { videoId: key },
+            resourceId: { videoId: id },
           },
         }) => (
-          <Grid item xs={12} md={6} key={key}>
-            <Link to={`/player/${key}`}>
-              <Card sx={{ display: "flex", height: thumbnail.height }}>
+          <Grid item xs={12} xl={6} key={id}>
+            <Button
+              component={Link}
+              to={`/player/${id}`}
+              sx={{ textTransform: "none" }}
+            >
+              <Card
+                sx={{
+                  display: "flex",
+                  height: thumbnail.height,
+                  minWidth: "750px",
+                }}
+              >
                 <CardMedia
                   component="img"
                   image={thumbnail.url}
                   sx={{ width: thumbnail.width, height: thumbnail.height }}
                 />
-                <Box>
-                  <CardContent>
-                    <Typography variant="h5">{title}</Typography>
-                    <Typography variant="subtitle1">{description}</Typography>
-                  </CardContent>
-                </Box>
+                <CardContent>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      display: "-webkit-box",
+                      WebkitLineClamp: 1,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {title}
+                  </Typography>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{
+                      display: "-webkit-box",
+                      WebkitLineClamp: 5,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {description}
+                  </Typography>
+                </CardContent>
               </Card>
-            </Link>
+            </Button>
           </Grid>
         )
       )}

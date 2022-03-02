@@ -1,9 +1,8 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import { Link, Outlet, useLoaderData } from "remix";
 import type { LoaderFunction } from "remix";
 import invariant from "tiny-invariant";
 import { getVideoData } from "~/videoData";
-import { youtube_v3 } from "@googleapis/youtube";
 
 export const loader: LoaderFunction = async ({ params }) => {
   invariant(params.slug, "expected params.slug");
@@ -13,28 +12,39 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 export default function Player() {
-  const { id, player, statistics } = useLoaderData<youtube_v3.Schema$Video>();
+  const {
+    id,
+    statistics: { commentCount, likeCount },
+  } = useLoaderData<GoogleApiYouTubeVideoResource>();
 
   return (
-    <Grid container>
-      <Grid item xs={12}>
+    <Container>
+      <Box
+        sx={{
+          marginLeft: "auto",
+          marginRight: "auto",
+          width: "640px",
+          display: "block",
+        }}
+      >
         <iframe
           width="640"
           height="360"
           src={`https://www.youtube.com/embed/${id}?autoplay=1`}
           frameBorder="0"
         ></iframe>
-      </Grid>
-      <Grid item xs={8}>
-        <Typography variant="h6">{`${statistics?.likeCount} likes`}</Typography>
-      </Grid>
-      <Grid item xs={4}>
-        <Button
-          component={Link}
-          to={`/player/${id}/comments`}
-        >{`${statistics?.commentCount} Comments`}</Button>
-      </Grid>
+        <Box sx={{ display: "flex" }}>
+          <Typography
+            variant="h6"
+            sx={{ flexGrow: 1 }}
+          >{`${likeCount} likes`}</Typography>
+          <Button
+            component={Link}
+            to={`/player/${id}/comments`}
+          >{`${commentCount} Comments`}</Button>
+        </Box>
+      </Box>
       <Outlet />
-    </Grid>
+    </Container>
   );
 }
