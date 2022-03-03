@@ -41,7 +41,9 @@
   "jest": {
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "app/**/*.tsx"
+      "**/*.tsx",
+      "!entry.*.tsx",
+      "!root.tsx"
     ],
     "coverageThreshold": {
       "global": {
@@ -50,7 +52,11 @@
         "lines": 80
       }
     },
+    "moduleNameMapper": {
+      "~/(.*)": "<rootDir>/$1"
+    },
     "preset": "ts-jest",
+    "rootDir": "./app",
     "testEnvironment": "jest-environment-jsdom",
     "testMatch": [
       "**/*.test.tsx"
