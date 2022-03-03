@@ -15,7 +15,6 @@
   "dependencies": {
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
-    "@googleapis/youtube": "^2.0.0",
     "@mui/material": "^5.4.4",
     "@remix-run/cloudflare-pages": "^1.2.3",
     "@remix-run/react": "^1.2.3",

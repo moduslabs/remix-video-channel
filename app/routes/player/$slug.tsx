@@ -1,42 +1,50 @@
-import { useState } from "react";
-import { Button, Grid, Modal } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import { Link, Outlet, useLoaderData } from "remix";
 import type { LoaderFunction } from "remix";
 import invariant from "tiny-invariant";
-import Comments from "./$slug/comments";
+import { getVideoData } from "~/videoData";
 
 export const loader: LoaderFunction = async ({ params }) => {
   invariant(params.slug, "expected params.slug");
-  return params.slug;
+  const videoData = await getVideoData(params.slug);
+
+  return videoData;
 };
 
 export default function Player() {
-  const id = useLoaderData();
-
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const {
+    id,
+    statistics: { commentCount, likeCount },
+  } = useLoaderData<GoogleApiYouTubeVideoResource>();
 
   return (
-    <Grid container>
-      <Grid item xs={12}>
+    <Container>
+      <Box
+        sx={{
+          marginLeft: "auto",
+          marginRight: "auto",
+          width: "640px",
+          display: "block",
+        }}
+      >
         <iframe
-          id="ytplayer"
           width="640"
           height="360"
           src={`https://www.youtube.com/embed/${id}?autoplay=1`}
           frameBorder="0"
         ></iframe>
-      </Grid>
-      <Grid item xs={8}></Grid>
-      <Grid item xs={4}>
-        <Link to={`/player/${id}/comments`}>
-          <Button onClick={handleOpen}>Comments</Button>
-        </Link>
-      </Grid>
-      <Modal open={open} onClose={handleClose}>
-        <Outlet />
-      </Modal>
-    </Grid>
+        <Box sx={{ display: "flex" }}>
+          <Typography
+            variant="h6"
+            sx={{ flexGrow: 1 }}
+          >{`${likeCount} likes`}</Typography>
+          <Button
+            component={Link}
+            to={`/player/${id}/comments`}
+          >{`${commentCount} Comments`}</Button>
+        </Box>
+      </Box>
+      <Outlet />
+    </Container>
   );
 }
