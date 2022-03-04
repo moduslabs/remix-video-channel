@@ -6,7 +6,7 @@ export const getVideoData = async (videoId: string) => {
   );
   const json = await response.json();
 
-  if (!json.items) {
+  if (json.items[0] === undefined) {
     throw new Response("Not Found", {
       status: 404,
     });
