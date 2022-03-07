@@ -5,11 +5,14 @@
   "license": "",
   "sideEffects": false,
   "scripts": {
-    "postinstall": "remix setup cloudflare-pages",
-    "build": "cross-env NODE_ENV=production remix build",
-    "dev:remix": "cross-env NODE_ENV=development remix watch",
+    "postinstall": "remix setup cloudflare-pages && npm run env",
+    "build": "npm run env && npm run build:prod",
+    "build:prod": "cross-env NODE_ENV=production remix build",
+    "build:dev": "cross-env NODE_ENV=development remix build",
+    "dev:remix": "node -r dotenv/config node_modules/.bin/remix watch",
     "dev:wrangler": "cross-env NODE_ENV=development wrangler pages dev ./public",
-    "dev": "cross-env NODE_ENV=development node -r dotenv/config node_modules/.bin/remix build && run-p dev:*",
+    "dev": "npm run env && npm run build:dev && run-p dev:*",
+    "env": "node env-parser.js",
     "start": "cross-env NODE_ENV=production npm run dev:wrangler"
   },
   "dependencies": {
@@ -24,7 +27,7 @@
     "tiny-invariant": "^1.2.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^3.2.0",
+    "@cloudflare/workers-types": "^3.4.0",
     "@remix-run/dev": "^1.2.3",
     "@remix-run/eslint-config": "^1.2.3",
     "@types/gapi.youtube": "^3.0.35",
@@ -39,5 +42,9 @@
   },
   "engines": {
     "node": ">=14"
-  }
+  },
+  "env": [
+    "NODE_ENV",
+    "YT_API_KEY"
+  ]
 }
