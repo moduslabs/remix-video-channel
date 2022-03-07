@@ -3,6 +3,8 @@ import auth from "./auth";
 interface CommentSnippet {
   snippet: {
     authorDisplayName: string;
+    authorProfileImageUrl: string;
+    id: string;
     textDisplay: string;
   };
 }
