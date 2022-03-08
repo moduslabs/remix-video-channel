@@ -1,11 +1,9 @@
 import { Comment, getComments } from "./comments";
-import { installGlobals } from "@remix-run/node";
-
-installGlobals();
 
 const mockComment = {} as Comment;
 
-const mockFetch = jest.spyOn(global, "fetch").mockImplementation(() =>
+// eslint-disable-next-line no-global-assign
+global.fetch = jest.fn(() =>
   Promise.resolve({
     json: () =>
       Promise.resolve({
@@ -16,6 +14,6 @@ const mockFetch = jest.spyOn(global, "fetch").mockImplementation(() =>
 
 test("comments API", async () => {
   const data = await getComments("mock-id");
-  expect(mockFetch).toHaveBeenCalled();
+  expect(fetch).toHaveBeenCalled();
   expect(data).toEqual([mockComment]);
 });

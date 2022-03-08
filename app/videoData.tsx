@@ -4,7 +4,9 @@ export const getVideoData = async (videoId: string) => {
   const response = await fetch(
     `https://youtube.googleapis.com/youtube/v3/videos?part=player&part=statistics&id=${videoId}&key=${auth.apiKey}`
   );
-  const json = await response.json();
+  const json = await response.json<
+    GoogleApiYouTubePaginationInfo<GoogleApiYouTubeVideoResource>
+  >();
 
   if (json.items[0] === undefined) {
     throw new Response("Not Found", {
@@ -12,5 +14,5 @@ export const getVideoData = async (videoId: string) => {
     });
   }
 
-  return json.items[0] as GoogleApiYouTubeVideoResource;
+  return json.items[0];
 };
