@@ -7,7 +7,7 @@ module.exports = {
   server: './server.js',
   devServerBroadcastDelay: 1000,
   ignoredRouteFiles: ['.*'],
-  serverBuildPath: 'functions/build.js',
+  // serverBuildPath: 'functions/build.js',
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",
   // serverBuildPath: "functions/[[path]].js",
