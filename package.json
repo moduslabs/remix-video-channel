@@ -84,6 +84,9 @@
     "YT_API_KEY"
   ],
   "lint-staged": {
-    "app/**/*.tsx": ["eslint --cache --fix", "prettier --write"]
+    "app/**/*.tsx": [
+      "eslint --cache --fix",
+      "prettier --write"
+    ]
   }
 }
