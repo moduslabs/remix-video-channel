@@ -1,5 +1,4 @@
-import { Dialog } from "@headlessui/react";
-import { useLoaderData, useNavigate } from "remix";
+import { useLoaderData, Link } from "remix";
 import type { LoaderFunction } from "remix";
 import invariant from "tiny-invariant";
 import { Comment, getComments } from "../../../comments";
@@ -12,27 +11,19 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export default function Comments() {
   const comments = useLoaderData<Comment[]>();
-  const navigate = useNavigate();
-
-  const handleClose = () => {
-    navigate("../");
-  };
 
   const createCommentMarkup = (text: string) => {
     return { __html: text };
   };
 
   return (
-    <Dialog
-      as="div"
-      className="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20"
-      open
-      onClose={handleClose}
-    >
+    <div className="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20">
       <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity" />
+        <Link to="../">
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity" />
+        </Link>
         <div className="bg-white rounded-lg overflow-hidden shadow-xl px-4 pt-5 pb-4 transform text-left">
-          <ul role="list" className="divide-y divide-gray-200">
+          <ul className="divide-y divide-gray-200">
             {comments.map(
               ({
                 snippet: {
@@ -40,14 +31,14 @@ export default function Comments() {
                     snippet: {
                       authorDisplayName,
                       authorProfileImageUrl,
-                      id,
+                      etag,
                       textDisplay,
                     },
                   },
                 },
                 replies,
               }) => (
-                <li key={id} className="py-4">
+                <li key={etag} className="py-4">
                   <div className="flex space-x-3">
                     <img
                       className="h-6 w-6 rounded-full"
@@ -75,11 +66,11 @@ export default function Comments() {
                           snippet: {
                             authorDisplayName,
                             authorProfileImageUrl,
-                            id,
+                            etag,
                             textDisplay,
                           },
                         }) => (
-                          <li key={id} className="pt-4 ml-9">
+                          <li key={etag} className="pt-4 ml-9">
                             <div className="flex space-x-3">
                               <img
                                 className="h-6 w-6 rounded-full"
@@ -111,6 +102,6 @@ export default function Comments() {
           </ul>
         </div>
       </div>
-    </Dialog>
+    </div>
   );
 }
