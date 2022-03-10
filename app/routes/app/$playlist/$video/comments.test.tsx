@@ -44,7 +44,7 @@ describe("Comments component", () => {
   test("should display comments", async () => {
     render(<Comments />);
     await loader({
-      params: { slug: "example-id" } as unknown,
+      params: { video: "example-id" } as unknown,
     } as DataFunctionArgs);
     expect(mockGetComments).toHaveBeenCalled();
     expect(screen.getByText("Example Author")).toBeDefined();

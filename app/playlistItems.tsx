@@ -1,8 +1,8 @@
 import auth from "./auth";
 
-export const getVideos = async () => {
+export const getPlaylistItems = async (playlistId: string) => {
   const response = await fetch(
-    `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PUsKwL0-e2eHRNa6Ne99AESw&maxResults=20&key=${auth.apiKey}`
+    `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=20&key=${auth.apiKey}`
   );
   const json = await response.json<
     GoogleApiYouTubePaginationInfo<GoogleApiYouTubePlaylistItemResource>

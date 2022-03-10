@@ -1,12 +1,12 @@
 import { useLoaderData, Link } from "remix";
 import type { LoaderFunction } from "remix";
 import invariant from "tiny-invariant";
-import { Comment, getComments } from "../../../comments";
+import { Comment, getComments } from "~/comments";
 
 export const loader: LoaderFunction = async ({ params }) => {
-  invariant(params.slug, "expected params.slug");
+  invariant(params.video, "expected params.video");
 
-  return getComments(params.slug);
+  return getComments(params.video);
 };
 
 export default function Comments() {

@@ -5,8 +5,8 @@ import invariant from "tiny-invariant";
 import { getVideoData } from "~/videoData";
 
 export const loader: LoaderFunction = async ({ params }) => {
-  invariant(params.slug, "expected params.slug");
-  const videoData = await getVideoData(params.slug);
+  invariant(params.video, "expected params.video");
+  const videoData = await getVideoData(params.video);
 
   return videoData;
 };
@@ -28,6 +28,7 @@ export default function Player() {
         }}
       >
         <iframe
+          title="yt-player"
           width="640"
           height="360"
           src={`https://www.youtube.com/embed/${id}?autoplay=1`}
@@ -40,7 +41,7 @@ export default function Player() {
           >{`${likeCount} likes`}</Typography>
           <Button
             component={Link}
-            to={`/player/${id}/comments`}
+            to={`./comments`}
           >{`${commentCount} Comments`}</Button>
         </Box>
       </Box>
