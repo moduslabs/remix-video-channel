@@ -1,6 +1,7 @@
 import Player, { loader } from "./$video";
 import { render, screen } from "@testing-library/react";
 import { DataFunctionArgs } from "@remix-run/server-runtime";
+import { LinkProps } from "remix";
 
 const mockVideo = {
   id: "example-id",
@@ -24,6 +25,7 @@ jest.mock("remix", () => {
     Outlet: () => {
       return <div />;
     },
+    Link: ({ children }: LinkProps) => <div>{children}</div>,
   };
 });
 test("Player", async () => {
