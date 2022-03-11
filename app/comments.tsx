@@ -3,6 +3,8 @@ import auth from "./auth";
 interface CommentSnippet {
   snippet: {
     authorDisplayName: string;
+    authorProfileImageUrl: string;
+    etag: string;
     textDisplay: string;
   };
 }
@@ -19,7 +21,7 @@ export const getComments = async (videoId: string) => {
   const response = await fetch(
     `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&part=replies&videoId=${videoId}&maxResults=20&key=${auth.apiKey}`
   );
-  const json = await response.json<GoogleApiYouTubePaginationInfo<any>>();
+  const json = await response.json<GoogleApiYouTubePaginationInfo<Comment>>();
 
-  return json.items as Comment[];
+  return json.items;
 };

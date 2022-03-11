@@ -8,3 +8,5 @@ node_modules
 /app/coverage
 .env
 .eslintcache
+
+/app/styles/app.css
