@@ -1,4 +1,4 @@
-import { getVideos } from "./videos";
+import { getPlaylistItems } from "./playlistItems";
 
 const mockVideo = {} as GoogleApiYouTubePlaylistItemResource;
 
@@ -12,8 +12,8 @@ global.fetch = jest.fn(() =>
   } as Response)
 );
 
-test("videos API", async () => {
-  const data = await getVideos();
+test("playlist API", async () => {
+  const data = await getPlaylistItems("");
   expect(fetch).toHaveBeenCalled();
   expect(data).toEqual([mockVideo]);
 });

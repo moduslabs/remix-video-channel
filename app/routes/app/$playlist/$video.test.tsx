@@ -1,6 +1,7 @@
-import Player, { loader } from "./$slug";
+import Player, { loader } from "./$video";
 import { render, screen } from "@testing-library/react";
 import { DataFunctionArgs } from "@remix-run/server-runtime";
+import { LinkProps } from "remix";
 
 const mockVideo = {
   id: "example-id",
@@ -24,12 +25,13 @@ jest.mock("remix", () => {
     Outlet: () => {
       return <div />;
     },
+    Link: ({ children }: LinkProps) => <div>{children}</div>,
   };
 });
 test("Player", async () => {
   render(<Player />);
   await loader({
-    params: { slug: "example-id" } as unknown,
+    params: { video: "example-id" } as unknown,
   } as DataFunctionArgs);
   expect(mockGetVideoData).toHaveBeenCalled();
   expect(screen.getByText("111 Comments")).toBeDefined();
