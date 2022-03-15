@@ -1,4 +1,4 @@
-import { useLoaderData, Link } from "remix";
+import { useLoaderData, Link, useLocation } from "remix";
 import type { LoaderFunction } from "remix";
 import invariant from "tiny-invariant";
 import { Comment, getComments } from "~/comments";
@@ -11,6 +11,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export default function Comments() {
   const comments = useLoaderData<Comment[]>();
+  const { search } = useLocation();
 
   const createCommentMarkup = (text: string) => {
     return { __html: text };
@@ -19,7 +20,7 @@ export default function Comments() {
   return (
     <div className="fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20">
       <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <Link to="../">
+        <Link to={{ pathname: "../", search: search }}>
           <div className="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity" />
         </Link>
         <div className="bg-white rounded-lg overflow-hidden shadow-xl px-4 pt-5 pb-4 transform text-left">

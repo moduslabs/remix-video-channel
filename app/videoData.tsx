@@ -4,6 +4,9 @@ export const getVideoData = async (videoId: string) => {
   const response = await fetch(
     `https://youtube.googleapis.com/youtube/v3/videos?part=player&part=statistics&id=${videoId}&key=${auth.apiKey}`
   );
+  if (!response.ok) {
+    throw response;
+  }
   const json = await response.json<
     GoogleApiYouTubePaginationInfo<GoogleApiYouTubeVideoResource>
   >();

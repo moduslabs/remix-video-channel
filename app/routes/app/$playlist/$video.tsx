@@ -1,4 +1,4 @@
-import { Link, Outlet, useLoaderData } from "remix";
+import { Link, Outlet, useLoaderData, useLocation } from "remix";
 import type { LoaderFunction } from "remix";
 import invariant from "tiny-invariant";
 import { getVideoData } from "~/videoData";
@@ -15,6 +15,7 @@ export default function Player() {
     id,
     statistics: { commentCount, likeCount },
   } = useLoaderData<GoogleApiYouTubeVideoResource>();
+  const { search } = useLocation();
 
   return (
     <div className="h-full flex-1">
@@ -28,7 +29,7 @@ export default function Player() {
         ></iframe>
         <div className="flex flex-row w-full pt-2 items-center">
           <h5 className="flex grow text-lg">{`${likeCount} likes`}</h5>
-          <Link to="./comments">
+          <Link to={{ pathname: "./comments", search: search }}>
             <button className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-gray-900 bg-gray-300 hover:bg-gray-400">
               {`${commentCount} Comments`}
             </button>

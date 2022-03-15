@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from "remix";
+import Search from "./Search";
 
 export default function Playlist() {
   const playlists = [
@@ -30,6 +31,7 @@ export default function Playlist() {
         <div className="flex-1 flex flex-col min-h-0 bg-gray-700">
           <div className="mt-5 flex-1 h-0 overflow-y-auto">
             <nav className="px-2 space-y-1">
+              <Search />
               {playlists.map(({ title, id }) => (
                 <NavLink
                   key={id}
