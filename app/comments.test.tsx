@@ -9,6 +9,7 @@ global.fetch = jest.fn(() =>
       Promise.resolve({
         items: [mockComment],
       }),
+    ok: true,
   } as Response)
 );
 

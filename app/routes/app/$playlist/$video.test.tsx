@@ -26,6 +26,9 @@ jest.mock("remix", () => {
       return <div />;
     },
     Link: ({ children }: LinkProps) => <div>{children}</div>,
+    useLocation: () => {
+      return { search: "" };
+    },
   };
 });
 test("Player", async () => {

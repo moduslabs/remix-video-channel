@@ -38,6 +38,9 @@ jest.mock("remix", () => {
       return [mockComment];
     },
     Link: () => <div />,
+    useLocation: () => {
+      return { search: "" };
+    },
   };
 });
 describe("Comments component", () => {
