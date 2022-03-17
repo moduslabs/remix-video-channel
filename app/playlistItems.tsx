@@ -9,7 +9,8 @@ export interface GenericYouTubeVideoListItem {
 
 export const getPlaylistItems = async (playlistId: string) => {
   const response = await fetch(
-    `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=20&key=${auth.apiKey}`
+    `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=20&key=${auth.apiKey}`,
+    { cf: { cacheTtl: 300 } }
   );
   if (!response.ok) {
     throw response;
@@ -30,7 +31,8 @@ export const getPlaylistItems = async (playlistId: string) => {
 
 export const getSearchResults = async (query: string) => {
   const response = await fetch(
-    `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCsKwL0-e2eHRNa6Ne99AESw&q=${query}&type=video&maxResults=20&key=${auth.apiKey}`
+    `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCsKwL0-e2eHRNa6Ne99AESw&q=${query}&type=video&maxResults=20&key=${auth.apiKey}`,
+    { cf: { cacheTtl: 300 } }
   );
 
   if (!response.ok) {

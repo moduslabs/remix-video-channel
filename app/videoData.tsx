@@ -2,7 +2,8 @@ import auth from "./auth";
 
 export const getVideoData = async (videoId: string) => {
   const response = await fetch(
-    `https://youtube.googleapis.com/youtube/v3/videos?part=player&part=statistics&id=${videoId}&key=${auth.apiKey}`
+    `https://youtube.googleapis.com/youtube/v3/videos?part=player&part=statistics&id=${videoId}&key=${auth.apiKey}`,
+    { cf: { cacheTtl: 300 } }
   );
   if (!response.ok) {
     throw response;
