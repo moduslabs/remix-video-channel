@@ -7,10 +7,12 @@ global.fetch = jest.fn((input: RequestInfo) => {
   if (input.toString().includes("mock-id")) {
     return Promise.resolve({
       json: () => Promise.resolve({ items: [mockVideoData] }),
+      ok: true,
     } as Response);
   } else {
     return Promise.resolve({
       json: () => Promise.resolve({ items: [] }),
+      ok: true,
     } as Response);
   }
 });
