@@ -19,7 +19,13 @@ export interface Comment {
 
 export const getComments = async (videoId: string) => {
   const response = await fetch(
-    `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&part=replies&videoId=${videoId}&maxResults=20&key=${auth.apiKey}`
+    `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&part=replies&videoId=${videoId}&maxResults=20&key=${auth.apiKey}`,
+    {
+      cf: {
+        cacheTtlByStatus: { "200-299": 3600, "404": 1, "500-599": 0 },
+        cacheEverything: true,
+      },
+    }
   );
   if (!response.ok) {
     throw response;
