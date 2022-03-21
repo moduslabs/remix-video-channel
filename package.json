@@ -6,7 +6,7 @@
   "sideEffects": false,
   "scripts": {
     "postinstall": "remix setup cloudflare-pages && npm run env",
-    "build": "npm run env && npm run build:prod",
+    "build": "npm run env && npm run build:css && npm run build:prod",
     "build:prod": "cross-env NODE_ENV=production remix build",
     "build:dev": "cross-env NODE_ENV=development remix build",
     "build:css": "tailwindcss -m -i ./styles/app.css -o app/styles/app.css",
