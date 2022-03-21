@@ -21,7 +21,6 @@ export const getComments = async (videoId: string) => {
   const response = await fetch(
     `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&part=replies&videoId=${videoId}&maxResults=20&key=${auth.apiKey}`,
     {
-      cache: "force-cache",
       cf: {
         cacheTtl: 3600,
         cacheEverything: true,
