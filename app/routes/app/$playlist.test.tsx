@@ -2,14 +2,15 @@ import Playlist, { loader } from "./$playlist";
 import { render, screen } from "@testing-library/react";
 import { DataFunctionArgs } from "@remix-run/server-runtime";
 import { LinkProps } from "remix";
-import { GenericYouTubeVideoListItem } from "~/playlistItems";
+import { GenericYouTubeVideoListItem } from "~/data/playlistItems";
 
 const mockPlaylistItem = {
   title: "Example Title",
+  id: "unique",
 } as GenericYouTubeVideoListItem;
 
 const mockGetPlaylistItems = jest.fn(() => mockPlaylistItem);
-jest.mock("~/playlistItems", () => ({
+jest.mock("~/data/playlistItems", () => ({
   getPlaylistItems: () => {
     mockGetPlaylistItems();
   },

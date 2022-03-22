@@ -1,7 +1,7 @@
 import { useLoaderData, Link, useLocation } from "remix";
 import type { LoaderFunction } from "remix";
 import invariant from "tiny-invariant";
-import { Comment, getComments } from "~/comments";
+import { Comment, getComments } from "~/data/comments";
 
 export const loader: LoaderFunction = async ({ params, context }) => {
   invariant(params.video, "expected params.video");

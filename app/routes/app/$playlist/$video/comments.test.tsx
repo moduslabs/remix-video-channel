@@ -1,5 +1,5 @@
 import Comments, { loader } from "./comments";
-import { Comment } from "~/comments";
+import { Comment } from "~/data/comments";
 import { render, screen } from "@testing-library/react";
 import { DataFunctionArgs } from "@remix-run/server-runtime";
 
@@ -27,7 +27,7 @@ const mockComment = {
 } as Comment;
 
 const mockGetComments = jest.fn(() => [mockComment]);
-jest.mock("~/comments", () => ({
+jest.mock("~/data/comments", () => ({
   getComments: () => {
     mockGetComments();
   },

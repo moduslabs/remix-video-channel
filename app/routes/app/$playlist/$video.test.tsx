@@ -12,7 +12,7 @@ const mockVideo = {
 } as GoogleApiYouTubeVideoResource;
 
 const mockGetVideoData = jest.fn(() => mockVideo);
-jest.mock("~/videoData", () => ({
+jest.mock("~/data/videoData", () => ({
   getVideoData: () => {
     mockGetVideoData();
   },

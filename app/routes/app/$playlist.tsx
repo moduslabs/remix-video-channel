@@ -10,7 +10,7 @@ import {
   GenericYouTubeVideoListItem,
   getPlaylistItems,
   getSearchResults,
-} from "~/playlistItems";
+} from "~/data/playlistItems";
 
 export const loader: LoaderFunction = async ({ params, request, context }) => {
   invariant(params.playlist, "expected params.playlist");
