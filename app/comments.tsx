@@ -1,5 +1,3 @@
-import auth from "./auth";
-
 interface CommentSnippet {
   snippet: {
     authorDisplayName: string;
@@ -17,9 +15,9 @@ export interface Comment {
   };
 }
 
-export const getComments = async (videoId: string) => {
+export const getComments = async (videoId: string, { YT_API_KEY }: ENV) => {
   const response = await fetch(
-    `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&part=replies&videoId=${videoId}&maxResults=20&key=${auth.apiKey}`,
+    `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet&part=replies&videoId=${videoId}&maxResults=20&key=${YT_API_KEY}`,
     {
       cf: {
         cacheTtl: 3600,

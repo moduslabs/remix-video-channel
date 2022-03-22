@@ -21,6 +21,6 @@ global.fetch = jest.fn(() =>
 );
 
 test("playlist API", async () => {
-  await getPlaylistItems("");
+  await getPlaylistItems("", { YT_API_KEY: "mock-key" });
   expect(fetch).toHaveBeenCalled();
 });

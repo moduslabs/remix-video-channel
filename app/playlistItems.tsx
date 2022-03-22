@@ -1,5 +1,3 @@
-import auth from "./auth";
-
 export interface GenericYouTubeVideoListItem {
   title: string;
   description: string;
@@ -7,9 +5,12 @@ export interface GenericYouTubeVideoListItem {
   id: string;
 }
 
-export const getPlaylistItems = async (playlistId: string) => {
+export const getPlaylistItems = async (
+  playlistId: string,
+  { YT_API_KEY }: ENV
+) => {
   const response = await fetch(
-    `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=20&key=${auth.apiKey}`,
+    `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=20&key=${YT_API_KEY}`,
     {
       cf: {
         cacheTtl: 3600,
@@ -34,9 +35,9 @@ export const getPlaylistItems = async (playlistId: string) => {
   );
 };
 
-export const getSearchResults = async (query: string) => {
+export const getSearchResults = async (query: string, { YT_API_KEY }: ENV) => {
   const response = await fetch(
-    `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCsKwL0-e2eHRNa6Ne99AESw&q=${query}&type=video&maxResults=20&key=${auth.apiKey}`,
+    `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCsKwL0-e2eHRNa6Ne99AESw&q=${query}&type=video&maxResults=20&key=${YT_API_KEY}`,
     {
       cf: {
         cacheTtl: 3600,

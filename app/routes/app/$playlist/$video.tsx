@@ -3,9 +3,9 @@ import type { LoaderFunction } from "remix";
 import invariant from "tiny-invariant";
 import { getVideoData } from "~/videoData";
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params, context }) => {
   invariant(params.video, "expected params.video");
-  const videoData = await getVideoData(params.video);
+  const videoData = await getVideoData(params.video, context);
 
   return videoData;
 };

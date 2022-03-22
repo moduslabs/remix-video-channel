@@ -18,8 +18,11 @@ global.fetch = jest.fn((input: RequestInfo) => {
 });
 
 test("video data API", async () => {
-  const data = await getVideoData("mock-id");
+  const data = await getVideoData("mock-id", { YT_API_KEY: "mock-key" });
   expect(fetch).toHaveBeenCalled();
   expect(data).toEqual(mockVideoData);
-  expect(async () => await getVideoData("mock-invalid-id")).rejects.toThrow();
+  expect(
+    async () =>
+      await getVideoData("mock-invalid-id", { YT_API_KEY: "mock-key" })
+  ).rejects.toThrow();
 });

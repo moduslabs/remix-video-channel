@@ -12,16 +12,16 @@ import {
   getSearchResults,
 } from "~/playlistItems";
 
-export const loader: LoaderFunction = async ({ params, request }) => {
+export const loader: LoaderFunction = async ({ params, request, context }) => {
   invariant(params.playlist, "expected params.playlist");
   if (params.playlist === "search") {
     const url = new URL(request.url);
     const query = url.searchParams.get("query") as string;
-    const searchResults = await getSearchResults(query);
+    const searchResults = await getSearchResults(query, context);
 
     return searchResults;
   }
-  const playlistData = await getPlaylistItems(params.playlist);
+  const playlistData = await getPlaylistItems(params.playlist, context);
 
   return playlistData;
 };

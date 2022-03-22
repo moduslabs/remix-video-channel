@@ -14,7 +14,7 @@ global.fetch = jest.fn(() =>
 );
 
 test("comments API", async () => {
-  const data = await getComments("mock-id");
+  const data = await getComments("mock-id", { YT_API_KEY: "mock-key" });
   expect(fetch).toHaveBeenCalled();
   expect(data).toEqual([mockComment]);
 });

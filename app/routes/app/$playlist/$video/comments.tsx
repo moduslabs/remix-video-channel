@@ -3,10 +3,10 @@ import type { LoaderFunction } from "remix";
 import invariant from "tiny-invariant";
 import { Comment, getComments } from "~/comments";
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params, context }) => {
   invariant(params.video, "expected params.video");
 
-  return getComments(params.video);
+  return getComments(params.video, context);
 };
 
 export default function Comments() {
@@ -42,6 +42,7 @@ export default function Comments() {
                 <li key={etag} className="py-4">
                   <div className="flex space-x-3">
                     <img
+                      loading="lazy"
                       className="h-6 w-6 rounded-full"
                       src={authorProfileImageUrl}
                       alt={authorDisplayName}
